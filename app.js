@@ -6243,8 +6243,14 @@ function copyToClipboard(str) {
 }
 function file_video(path) {
   const url = window.location.origin + path;
+  var url_plain = url.replace(/^(https?:|)\/\//, '')
   var file_name = decodeURIComponent(path.trim("/").split("/").slice(-1)[0].replaceAll("%5C%5C", "%5C"));
   let player_items = [
+    {
+      text: "mpv",
+      href: `intent://${url_plain}#Intent;type=video/any;package=is.xyz.mpv;scheme=https;end;`,
+    },
+    { text: "VLC", href: `vlc://${url}` },
     {
       text: "MXPlayer(Free)",
       href: `intent:${url}#Intent;package=com.mxtech.videoplayer.ad;S.title=${path};end`,
@@ -6254,7 +6260,6 @@ function file_video(path) {
       href: `intent:${url}#Intent;package=com.mxtech.videoplayer.pro;S.title=${path};end`,
     },
     { text: "nPlayer", href: `nplayer-${url}` },
-    { text: "VLC", href: `vlc://${url}` },
     { text: "PotPlayer", href: `potplayer://${url}` },
   ]
     .map(
